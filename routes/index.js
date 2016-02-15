@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Clique' });
 });
 
-/* GET Userlist page displays the usercollection for testing purposes. */
+/* GET Userlist stuff page displays the usercollection for testing purposes. */
 router.get('/userlist', function(req, res) {
     var db = req.db;
     var collection = db.get('usercollection');
