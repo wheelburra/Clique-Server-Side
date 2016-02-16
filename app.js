@@ -15,6 +15,10 @@ var users = require('./routes/users');
 
 var app = express();
 
+//Port of choice to listen, works on port 3000 as well
+var port = process.env.PORT || 8080;
+app.listen(port);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -67,5 +71,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
+//Nice to See.
+console.log('Server started! At http://localhost:' + port);
 
 module.exports = app;
