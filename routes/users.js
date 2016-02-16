@@ -5,10 +5,19 @@ var router = express.Router();
 // This was just the proof concept to get data from the database 
 router.get('/userlist', function(req, res) {
     var db = req.db;
-    var collection = db.get('usercollection');
+    //var collection = db.get('usercollection');
+    var collection = db.get('userlist');
     collection.find({},{},function(e,docs){
         res.json(docs); //send JSON data!
     });
+});
+
+//Testing url paramter passing and returning, no DB involved
+router.get('/urltest', function (req, res) {
+    var id = req.param('id');
+    var token = req.param('token');
+    res.send(id + ' ' + token);
+
 });
 
 //POST to adduser.
