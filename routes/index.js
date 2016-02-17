@@ -30,67 +30,61 @@ router.get('/loginTest', function(req, res) {
 // POST JSON data to the User Registration function
 router.post('/register', function(req, res) {
 
+    // Set the JSON data to a variable
+    var str = req.body;
+    
     // Set the internal DB variable
     var db = req.db;
 
-    // Get the form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.email;
-    var userPass = req.body.password;
-    var fullName = req.body.fullname;
-    
-    // Set the collection
+    // Set the user profile collection to a variable
     var collection = db.get('usercollection');
 
     // Submit to the DB, adding a new user object to usercollection
     collection.insert({
-        "username" : userName,
-        "email" : userEmail,
-        "password" : userPass,
-        "fullname" : fullName
+        "username" : str.username,
+        "email" : str.email,
+        "password" : str.password,
+        "fullname" : str.fullname
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+        console.log("There was a problem adding the information to the database.");   
+        res.send({'message':"Fail"});
         }
         else {
             // And forward to success page 
             /* this is where a modification can be 
              made to return json data to the client app */
-            res.redirect("userlist"); // allows for success confirmation on the server side. to be removed later
-        }
+        res.send({'message':"Success"});    
+        //res.redirect("userlist"); // allows for success confirmation on the server side. to be removed later
+       }
     });
 });
 
-// POST to Login 
-// NOT READY YET
-router.post('/login', function(req, res) {
+// POST to Login function
+router.post('/login', function (req, res) {
 
-    // Set our internal DB variable
+    // Set the JSON data to a variable
+    var str = req.body;
+    
+    // Set the internal DB variable
     var db = req.db;
-
-    // Get our form values. These rely on the "name" attributes
+    // Obtains the user profile collection setting it to a variable
+    var collection = db.get('usercollection');
+    
+    // Get our JSON values.
     var userName = req.body.username;
     var userPass = req.body.password;
-
-    // Set our collection
-    var collection = db.get('usercollection');
-
-    // Need to change this to a find user and verify password match
-    collection.insert({
-        "username" : userName,
-        "password" : userPass
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem logging into Clique.");
+    
+    // Finds a single document in the collection
+    db.usercollection.findOne({ username: userName }).on('success', function (doc) {
+        // the password is incorrect
+        if (userPass !== doc.password){
+            res.send({'message':"Fail"});
         }
+        // the password matches!
         else {
-            // And forward to success page
-            /* this is where a modification can be 
-            made to return json data to the client app
-            of successful login*/
-            res.redirect("userlist"); // allows for success confirmation on the server side. to be removed later
+            res.send({'message':"Success"});
         }
     });
 });
