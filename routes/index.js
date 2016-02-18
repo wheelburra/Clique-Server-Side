@@ -29,39 +29,45 @@ router.get('/loginTest', function (req, res) {
 
 // POST JSON data to the User Registration function
 router.post('/register', function (req, res) {
-
     // Set the JSON data to a variable
     var str = req.body;
-
     // Set the internal DB variable
     var db = req.db;
-
     // Set the user profile collection to a variable
     var collection = db.get('usercollection');
 
-    // Submit to the DB, adding a new user object to usercollection
-    collection.insert({
-        "username": str.username,
-        "email": str.email,
-        "password": str.password,
-        "fullname": str.fullname
-    }, function (err, doc) {
+    // Searches database for existing username match
+    collection.findOne({username: str.username}, function (err, doc) {
         if (err) {
-            // If it failed, return error
-            console.log("There was a problem adding the information to the database.");
+            console.log("There was a problem searching the database.");
             res.send({'message': err});
+        }
+        // Username already exists in the database
+        if (doc) {
+            console.log("Username already exists.");
+            res.send({'message': "Username already exists"});
         } else {
-            // And forward to success page 
-            /* this is where a modification can be 
-             made to return json data to the client app */
-            console.log(doc);
-            res.send(doc);
-            //res.redirect("userlist"); // allows for success confirmation on the server side. to be removed later
+            // Writing to the DB, adding a new user document to usercollection
+            collection.insert({
+                "username": str.username,
+                "email": str.email,
+                "password": str.password,
+                "fullname": str.fullname
+            }, function (err, doc) {
+                if (err) {
+                    // Writing to the database error
+                    console.log("There was a problem adding the information to the database.");
+                    res.send({'message': err});
+                } else {
+                    // Return profile information in JSON 
+                    console.log(doc);
+                    res.send(doc);
+                }
+            });
         }
     });
 });
-
-// POST to Login function
+// POST JSON data to the Login function
 router.post('/login', function (req, res) {
 
     // Set the JSON data to a variable
