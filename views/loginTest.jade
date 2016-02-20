@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1= title
-    form#formLogin(name="login",method="post",action="/login")
+    form#formLogin(name="login",method="get",action="users/login")
         input#inputUserEmail(type="text", placeholder="username", name="username")
         input#inputUserEmail(type="text", placeholder="password", name="password")
         button#btnSubmit(type="submit") submit

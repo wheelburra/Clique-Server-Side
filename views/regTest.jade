@@ -2,10 +2,10 @@ extends layout
 
 block content
     h1= title
-    form#formRegister(name="register",method="post",action="/register")
+    form#formRegister(name="register",method="get",action="users/register")
         input#inputUserName(type="text", placeholder="username", name="username")
         input#inputUserEmail(type="text", placeholder="email", name="email")
         input#inputUserEmail(type="text", placeholder="password", name="password")
-        input#inputUserEmail(type="text", placeholder="fullname", name="fullname")
+        input#inputUserEmail(type="text", placeholder="name", name="name")
         button#btnSubmit(type="submit") submit
         

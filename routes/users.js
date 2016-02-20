@@ -1,35 +1,46 @@
 var express = require('express');
 var router = express.Router();
+var login = require('./login'); //allows login.js exports to be used
+var register = require('./register'); //allows register.js exports to be used
 
-//GET userlist. 
-// This was just the proof concept to get data from the database 
-router.get('/userlist', function(req, res) {
+//Route calls login function for login.js file
+router.get('/login', function (req, res) {
+    
+    //pull parameters from URL
+    var username = req.param('username');
+    var password = req.param('password');
+    
+    // Set the internal DB variable
     var db = req.db;
+    
+    // Set the user profile collection to a variable
     var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.json(docs); //send JSON data!
+    
+    //Returns callback from login function
+    login.login(username, password, collection, function (found) {
+        res.send(found);
     });
 });
 
-//Testing url paramter passing and returning, no DB involved
-router.get('/urltest', function (req, res) {
-    var id = req.param('id');
-    var token = req.param('token');
-    res.send(id + ' ' + token);
-
-});
-
-//POST to adduser.
-
-/* not needed anymore
-router.post('/adduser', function(req, res) {
+//Route calls login function for login.js file
+router.get('/register', function (req, res) {
+    
+    //pull parameters from URL
+    var name = req.param('name');
+    var username = req.param('username');
+    var password = req.param('password');
+    var email = req.param('email');
+    
+    // Set the internal DB variable
     var db = req.db;
+    
+    // Set the user profile collection to a variable
     var collection = db.get('usercollection');
-    collection.insert(req.body, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
+    
+    // Return callback from register function
+    register.register(name, username, password, email, collection, function (result) {
+        res.send(result);
     });
 });
-*/
+
 module.exports = router;

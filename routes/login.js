@@ -1,0 +1,43 @@
+﻿
+// Exports below function to be used in other modules
+module.exports =  { 
+
+    login : function (username, password, collection, callback) { //Searches passed collection for user and returns callback
+        
+        // Finds a single document in the collection
+        collection.findOne({ username: username }, function (err, doc) {
+            if (err) {
+                console.log("There was a problem retrieving the information to the database.");
+                callback({ 'message': err });
+            }
+            // Found a username match in databse
+            if (doc) {
+                var urlPass = password;
+                var dbPass = doc.password;
+
+                // the password matches!
+                if (urlPass == dbPass) {
+                    console.log(dbPass + " matches " + urlPass);
+                    // Send user profile in JSON
+                    callback(doc);
+                }
+                // The password is incorrect
+                else {
+                    console.log(dbPass + " does not match " + urlPass);
+                    callback("error")
+                }
+            }
+            // No username match found in database
+            else {
+                console.log(password + " does not exist");
+                callback("error");
+            }
+        });
+    }
+};
+
+
+
+
+
+
