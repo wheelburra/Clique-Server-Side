@@ -5,8 +5,7 @@ var router = express.Router();
 // This was just the proof concept to get data from the database 
 router.get('/userlist', function(req, res) {
     var db = req.db;
-    //var collection = db.get('usercollection');
-    var collection = db.get('userlist');
+    var collection = db.get('usercollection');
     collection.find({},{},function(e,docs){
         res.json(docs); //send JSON data!
     });

@@ -28,16 +28,22 @@ router.get('/loginTest', function (req, res) {
 });
 
 // POST JSON data to the User Registration function
-router.post('/register', function (req, res) {
-    // Set the JSON data to a variable
-    var str = req.body;
+router.get('/register', function (req, res) {
+
+    //pull parameters from URL
+    var name = req.param('name');
+    var username = req.param('username');
+    var password = req.param('password');
+    var email = req.param('email');
+
     // Set the internal DB variable
     var db = req.db;
+
     // Set the user profile collection to a variable
     var collection = db.get('usercollection');
 
     // Searches database for existing username match
-    collection.findOne({username: str.username}, function (err, doc) {
+    collection.findOne({username: username}, function (err, doc) {
         if (err) {
             console.log("There was a problem searching the database.");
             res.send({'message': err});
@@ -45,14 +51,14 @@ router.post('/register', function (req, res) {
         // Username already exists in the database
         if (doc) {
             console.log("Username already exists.");
-            res.send({'message': "Username already exists"});
+            res.send("Username already exists.");
         } else {
             // Writing to the DB, adding a new user document to usercollection
             collection.insert({
-                "username": str.username,
-                "email": str.email,
-                "password": str.password,
-                "fullname": str.fullname
+                "name": name,
+                "username": username,
+                "password": password,
+                "email": email
             }, function (err, doc) {
                 if (err) {
                     // Writing to the database error
@@ -61,31 +67,35 @@ router.post('/register', function (req, res) {
                 } else {
                     // Return profile information in JSON 
                     console.log(doc);
-                    res.send(doc);
+                    res.send("Welcome " + name + "! Press back arrow to log in.");
                 }
             });
         }
     });
 });
-// POST JSON data to the Login function
-router.post('/login', function (req, res) {
 
-    // Set the JSON data to a variable
-    var str = req.body;
+// POST JSON data to the Login function
+router.get('/login', function (req, res) {
+
+    //pull parameters from URL
+    var username = req.param('username');
+    var password = req.param('password');
+
     // Set the internal DB variable
     var db = req.db;
+
     // Obtains the user profile collection setting it to a variable
     var collection = db.get('usercollection');
 
     // Finds a single document in the collection
-    collection.findOne({username: req.body.username}, function (err, doc) {
+    collection.findOne({username: username}, function (err, doc) {
         if (err) {
-            console.log("There was a problem adding the information to the database.");
+            console.log("There was a problem retrieving the information to the database.");
             res.send({'message': err});
         }
         // Found a username match in databse
         if (doc) {
-            var urlPass = req.body.password;
+            var urlPass = password;
             var dbPass = doc.password;
             // the password matches!
             if (urlPass == dbPass) {
@@ -96,13 +106,13 @@ router.post('/login', function (req, res) {
             // The password is incorrect
             else {
                 console.log(dbPass + " does not match " + urlPass);
-                res.send({'message': "Fail"});
+                res.send("error")
             }
         }
         // No username match found in database
         else {
-            console.log(req.body.password + " does not exist");
-            res.send({'message': "user does not exist"});
+            console.log(password + " does not exist");
+            res.send("error");
         }
     });
 });
