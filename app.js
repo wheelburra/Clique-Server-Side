@@ -13,6 +13,8 @@ var db = monk('localhost:27017/node-android');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+// NEW pics - being tested
+//var pictures = require('./routes/pictures');
 var app = express();
 
 //Port of choice to listen, works on port 3000 as well
@@ -33,11 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
     req.db = db;
     next();
-});
+}); 
 
 // routing stuff
 app.use('/', routes);
 app.use('/users', users);
+// new - pictures
+//app.use('/pictures', pictures);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

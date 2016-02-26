@@ -2,6 +2,14 @@ extends layout
 
 block content
     h1= title
-    p Welcome to Clique
-
-    
+    div
+        p Welcome to Clique
+        button(onclick="viewList()") View User List
+        button(onclick="getPictures()") View Images
+        button(onclick="login()") Login to Clique
+        button(onclick="register()") Register to Clique
+    script.
+        function viewList() { window.location.href = '/userlist'; }
+        function getPictures() { window.location.href = '/pictures'; }
+        function login() { window.location.href = '/loginTest'; }
+        function register() { window.location.href = '/regTest'; }    

@@ -1,4 +1,4 @@
-﻿
+
 // Exports below function to be used in other modules
 module.exports =  { 
 
@@ -35,9 +35,3 @@ module.exports =  {
         });
     }
 };
-
-
-
-
-
-
