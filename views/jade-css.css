@@ -1,0 +1,28 @@
+/* CSS Styling for JADE Files */
+/* Must be called via /views Directory */
+
+html, body { 
+    background-color: #49A9B6; 
+}
+
+div, p { 
+    font-family: Trebuchet MS, sans-serif;
+    font-size: 10pt; 
+    color: #232323; 
+    text-decoration: none;
+    padding: 10px;
+}
+
+div {
+    background-color: #2F8692;
+    border: 1px solid #232323; 
+    margin: 5px;
+    width: 400px;
+}
+
+h1 { 
+    margin-left: 5px; 
+    color: #F5F5F5; 
+    letter-spacing: 2px;
+}
+form, button { margin: 2px; }

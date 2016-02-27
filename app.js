@@ -1,3 +1,5 @@
+/* global err */
+
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -12,9 +14,9 @@ var db = monk('localhost:27017/node-android');
 //this sets up the routing
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 // NEW pics - being tested
-//var pictures = require('./routes/pictures');
+// var pictures = require('./routes/pictures');
+
 var app = express();
 
 //Port of choice to listen, works on port 3000 as well
@@ -37,11 +39,33 @@ app.use(function(req,res,next){
     next();
 }); 
 
+/* NEW - IMAGE UPLOADING */
+var path = require('path');
+var fs = require('fs');
+
+app.post('/pictures', function (req, res) {
+    var tempPath = req.files.file.path,
+        targetPath = path.resolve('./pictures/image.png');
+    if (path.extname(req.files.file.name).toLowerCase() === '.png') {
+        fs.rename(tempPath, targetPath, function(err) {
+            if (err) throw err;
+            console.log("Upload completed!");
+        });
+    } else {
+        fs.unlink(tempPath, function () {
+            if (err) throw err;
+            console.error("Only .png files are allowed!");
+        });
+    }
+    // ...
+});
+
 // routing stuff
 app.use('/', routes);
 app.use('/users', users);
-// new - pictures
-//app.use('/pictures', pictures);
+// app.use('/pictures', pictures);
+
+// app.use(express.bodyParser({uploadDir:'/pictures'}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

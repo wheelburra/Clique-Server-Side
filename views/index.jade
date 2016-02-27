@@ -1,15 +1,27 @@
-extends layout
-
-block content
-    h1= title
-    div
-        p Welcome to Clique
-        button(onclick="viewList()") View User List
-        button(onclick="getPictures()") View Images
-        button(onclick="login()") Login to Clique
-        button(onclick="register()") Register to Clique
-    script.
-        function viewList() { window.location.href = '/userlist'; }
-        function getPictures() { window.location.href = '/pictures'; }
-        function login() { window.location.href = '/loginTest'; }
-        function register() { window.location.href = '/regTest'; }    
+// index.jade
+doctype html
+html
+    head
+        style
+            include jade-css.css
+    body
+        h1 Clique
+        div
+            p Welcome to Clique!
+            button(onclick="viewList()") View User List
+            button(onclick="getPictures()") View Images
+            button(onclick="login()") Login to Clique
+            button(onclick="register()") Register to Clique
+        //- Sarah Wallick - Feb. 26th - Simulates a User with Pop-Up Window to Photos
+        div Upload a Photo:
+            br
+            form#formUpload(name="upload", method="post", action="/picTest") 
+                input#picInput(type="file", placeholder="file", nam="file")
+                button#btnSubmit(type="submit") submit
+        script.
+            function viewList() { window.location.href = '/userlist'; }
+            function getPictures() { window.location.href = '/picTest'; }
+            function login() { window.location.href = '/loginTest'; }
+            function register() { window.location.href = '/regTest'; }
+    
+        // enctype="multipart/form-data"
