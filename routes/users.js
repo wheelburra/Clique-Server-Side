@@ -48,8 +48,9 @@ router.get('/register', function (req, res) {
 
 router.get('/picToApp', function (req, res) {
     
-    // ObjectID will get parsed from req
-    var objID = "meme.jpg";    
+    // ObjectID will get parsed from req eventually 
+    // var objID = req.param('_id');
+    var objID = "56d220085989e7310d3aae49";    
         // Set the internal DB variable
     var db = req.db;
     
@@ -58,12 +59,11 @@ router.get('/picToApp', function (req, res) {
     
     picToApp.getPic(objID, collection, function (result) {
         //res.writeHead(200, {'Content-Type': 'image/jpeg'});
-        res.send(result);
+        res.json(result);
     });
 });
 
 router.get('/picFromApp', function (req, res) {
-    
     
     picToApp.uploadPic(function (result) {
         //res.send(result);
