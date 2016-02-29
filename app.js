@@ -5,17 +5,17 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var fs = require('fs');
 //this connects to the mongo database
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/node-android');
+//Multer adds a body object and a file or files object to the request object. needed??
+//var multer  = require('multer');
 
 //this sets up the routing
 var routes = require('./routes/index');
 var users = require('./routes/users');
-// NEW pics - being tested
-// var pictures = require('./routes/pictures');
 
 var app = express();
 

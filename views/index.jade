@@ -13,9 +13,10 @@ html
             button(onclick="login()") Login to Clique
             button(onclick="register()") Register to Clique
         //- Sarah Wallick - Feb. 26th - Simulates a User with Pop-Up Window to Photos
+        // action will need to point to the route that handles uploads. currently /pictures
         div Upload a Photo:
-            br
-            form#formUpload(name="upload", method="post", action="/picTest") 
+            br                                              
+            form#formUpload(name="upload", method="post", action="/pictures")
                 input#picInput(type="file", placeholder="file", nam="file")
                 button#btnSubmit(type="submit") submit
         script.
