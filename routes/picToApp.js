@@ -17,12 +17,14 @@ module.exports = {
                 
                 // should include doc.(data from db) in below callback for app to use?
                 // returns binary data but not in a bson object?
-                fs.readFile(file, 'base64', function (err, data){
+                //fs.readFile(file, 'base64', function (err, data) {
+                fs.readFile(file, function (err, data) {
                     if (err) {
                         return console.log(err);
                     }
                     //doc gives all the related data from db
-                    callback({'document': doc, 'image': data});
+                    //callback({ 'document': doc, 'image': data });
+                    callback(data); //Just send data when sending a picture for full view
                 });
                 
             }

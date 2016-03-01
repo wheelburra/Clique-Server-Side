@@ -48,10 +48,10 @@ router.get('/register', function (req, res) {
 
 router.get('/picToApp', function (req, res) {
     
-    // ObjectID will get parsed from req eventually 
-    // var objID = req.param('_id');
-    var objID = "56d220085989e7310d3aae49";    
-        // Set the internal DB variable
+    var objID = req.param('objID'); //this is hardcoded on app side for now
+    //var objID = "56d4da380ce7c34dc33a5753"; //this is local to alex's DB  
+
+    // Set the internal DB variable
     var db = req.db;
     
     // Set the user profile collection to a variable
@@ -59,7 +59,7 @@ router.get('/picToApp', function (req, res) {
     
     picToApp.getPic(objID, collection, function (result) {
         //res.writeHead(200, {'Content-Type': 'image/jpeg'});
-        res.json(result);
+        res.send(result);//use send instead of json, sends binary data as buffer
     });
 });
 
