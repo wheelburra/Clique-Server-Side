@@ -17,7 +17,7 @@ router.get('/login', function (req, res) {
     var db = req.db;
     
     // Set the user profile collection to a variable
-    var collection = db.get('usercollection');
+    var collection = db.get('userCollection');
     
     //Returns callback from login function
     login.login(username, password, collection, function (found) {
@@ -38,7 +38,7 @@ router.get('/register', function (req, res) {
     var db = req.db;
     
     // Set the user profile collection to a variable
-    var collection = db.get('usercollection');
+    var collection = db.get('userCollection');
     
     // Return callback from register function
     register.register(name, username, password, email, collection, function (result) {

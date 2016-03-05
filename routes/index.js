@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
 /* GET Userlist stuff page displays the usercollection for testing purposes. */
 router.get('/userlist', function (req, res) {
     var db = req.db;
-    var collection = db.get('usercollection');
+    var collection = db.get('userCollection');
     collection.find({}, {}, function (e, docs) {
         res.render('userlist', {
             "userlist": docs
@@ -20,7 +20,7 @@ router.get('/userlist', function (req, res) {
 // Same as above test with just printing JSon data
 router.get('/collection', function (req, res) {
     var db = req.db;
-    var collection = db.get('usercollection');
+    var collection = db.get('userCollection');
     collection.find({}, {}, function (e, docs) {
         res.json(docs); //send JSON data!
     });

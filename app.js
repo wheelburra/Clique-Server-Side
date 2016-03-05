@@ -6,10 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-//this connects to the mongo database
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/node-android');
+//this connects to the mlab cloud mongo database
+var db = require('monk')('mongodb://CliqueApp:13QarUm5dKGP@ds013848.mlab.com:13848/clique');
 //Multer adds a body object and a file or files object to the request object. needed??
 //var multer  = require('multer');
 
