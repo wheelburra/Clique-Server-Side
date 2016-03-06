@@ -3,12 +3,13 @@ var router = express.Router();
 var login = require('./login'); //allows login.js exports to be used
 var register = require('./register'); //allows register.js exports to be used
 var picToApp = require('./picToApp'); //allows picToApp.js exports to be used
+var getAlbum = require('./getAlbum'); //allows picToApp.js exports to be used
 //var picFromApp = require('./picFromApp'); //allows picToApp.js exports to be used
 //uncomment above when code is ready to be tested
 
 //Route calls login function for login.js file
 router.get('/login', function (req, res) {
-    
+ 
     //pull parameters from URL
     var username = req.param('username');
     var password = req.param('password');
@@ -67,6 +68,31 @@ router.get('/picFromApp', function (req, res) {
     
     picToApp.uploadPic(function (result) {
         //res.send(result);
+    });
+});
+
+//Route calls getAlbum function from getAlbum.js file
+router.get('/getAlbum', function (req, res) {
+    
+    // pull parameters from URL
+    //var album = req.param('album');
+    //var username = req.param('username');
+    
+    //hard coded for testing purposes
+    var album = 'album1';
+    var username = 'skyweezy';
+   
+    // Set the internal DB variable
+    var db = req.db;
+    
+    // Set the user profile collection to a variable
+    var collection = db.get(album);
+
+    // Return callback from register function
+    getAlbum.getAlbum(username, collection, function (result) {
+        res.contentType('application/json');
+        console.log(result);
+        res.send(result);
     });
 });
 module.exports = router;
