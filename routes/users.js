@@ -3,7 +3,6 @@ var router = express.Router();
 var login = require('./login'); //allows login.js exports to be used
 var register = require('./register'); //allows register.js exports to be used
 var picToApp = require('./picToApp'); //allows picToApp.js exports to be used
-var getAlbum = require('./getAlbum'); //allows picToApp.js exports to be used
 //var picFromApp = require('./picFromApp'); //allows picToApp.js exports to be used
 //uncomment above when code is ready to be tested
 
