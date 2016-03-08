@@ -71,28 +71,22 @@ router.get('/picFromApp', function (req, res) {
     });
 });
 
-//Route calls getAlbum function from getAlbum.js file
-router.get('/getAlbum', function (req, res) {
-    
-    // pull parameters from URL
-    //var album = req.param('album');
-    //var username = req.param('username');
-    
-    //hard coded for testing purposes
-    var album = 'album1';
-    var username = 'skyweezy';
-   
-    // Set the internal DB variable
+/* GET the album collection. */
+router.get('/getCollection', function (req, res) {
+    //sets the database
     var db = req.db;
-    
-    // Set the user profile collection to a variable
-    var collection = db.get(album);
-
-    // Return callback from register function
-    getAlbum.getAlbum(username, collection, function (result) {
-        res.contentType('application/json');
-        console.log(result);
-        res.send(result);
+    // pull parameters from URL
+    var album = req.param('album');
+    var username = req.param('username');
+    // finds the collection named usernamealbum
+    var collection = db.get(username + album);
+    collection.find({}, {}, function (err, docs) {
+        if (err) {
+            console.log('error occured');
+            res.send({'message': err});
+        } else {
+            res.send(docs);
+        }
     });
 });
 module.exports = router;
