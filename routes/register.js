@@ -1,4 +1,5 @@
 ﻿// Exports below function to be used in other modules
+var fs = require('fs');
 module.exports = {
     
     //Attempts to push register to DB
@@ -21,14 +22,17 @@ module.exports = {
                     "username": username,
                     "password": password,
                     "email": email
-                }, function (err, doc) {
+                }, function (err) {
                     if (err) {
                         // Writing to the database error
                         console.log("There was a problem adding the information to the database.");
                         callback({ 'message': err });
                     } else {
+                        // Creates the users image subdirectory for user albums
+                        var userPath = ".\\public\\images\\" + username;
+                        fs.mkdirSync(userPath);
+                        
                         // Return profile information in JSON 
-                        console.log(doc);
                         callback("Welcome " + name + "! Press back arrow to log in.");
                     }
                 });

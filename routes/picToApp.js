@@ -11,9 +11,7 @@ module.exports = {
             // found picture with matching id
             if (doc) {
                 fs = require('fs');
-                var name = doc.name;
                 var file = doc.path;
-                //var file = "public/images/meme.jpg";
                 
                 // should include doc.(data from db) in below callback for app to use?
                 // returns binary data but not in a bson object?

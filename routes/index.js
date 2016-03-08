@@ -31,7 +31,6 @@ router.get('/urltest', function (req, res) {
     var id = req.param('id');
     var token = req.param('token');
     res.send(id + ' ' + token);
-
 });
 
 // GET regTest.jade the REGISTRATION TEST PAGE. 
