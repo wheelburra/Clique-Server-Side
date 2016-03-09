@@ -4,7 +4,7 @@ var login = require('./login'); //allows login.js exports to be used
 var register = require('./register'); //allows register.js exports to be used
 var picToApp = require('./picToApp'); //allows picToApp.js exports to be used
 var createAlbum = require('./createAlbum'); //allows createAlbum.js exports to be used
-//var picFromApp = require('./picFromApp'); //allows picToApp.js exports to be used
+var picFromApp = require('./picFromApp'); //allows picToApp.js exports to be used
 //uncomment above when code is ready to be tested
 
 //Route calls login function for login.js file
@@ -47,6 +47,7 @@ router.get('/register', function (req, res) {
     });
 });
 
+// Sends requested image to the app
 router.get('/picToApp', function (req, res) {
 
     var objID = req.param('objID'); //this is hardcoded on app side for now
@@ -62,11 +63,33 @@ router.get('/picToApp', function (req, res) {
         res.send(result);//use send instead of json, sends binary data as buffer
     });
 });
+/*
+ * Downloads an image from the phone and stores in users directory and 
+ * adds associated document to the database
+ *  NOT READY YET!!!
+ */
+router.post('/picFromApp', function (req, res) {
+    //hard codded for testing
+    var album = 'album1';
+    var username = 'skyweezy';
+   
+    // Get our JSON values.
+    //var album = req.body.album;
+    //var username = req.body.username;
+    //   uncertain with method to use to obtain the album and username values
+    // pull parameters from URL
+    //var album = req.param('album');
+    //var username = req.param('username');
+    var readPic = req.files.image.path;
+    var origName = req.files.image.originalFilename;
 
-router.get('/picFromApp', function (req, res) {
-
-    picToApp.uploadPic(function (result) {
-        //res.send(result);
+    // Set the internal DB variable
+    var db = req.db;
+    // Set the user profile collection to a variable
+    var collection = db.get(username + album);
+    
+    picFromApp.uploadPic(username, album, readPic, origName, collection, function (result) { 
+        res.send(result);
     });
 });
 
