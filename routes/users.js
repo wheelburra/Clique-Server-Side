@@ -51,12 +51,13 @@ router.get('/register', function (req, res) {
 router.get('/picToApp', function (req, res) {
 
     var objID = req.param('objID'); //this is hardcoded on app side for now
+    var coll = req.param('collection');
     
     // Set the internal DB variable
     var db = req.db;
 
     // Set the user profile collection to a variable
-    var collection = db.get('imageCollection');
+    var collection = db.get(coll);
 
     picToApp.getPic(objID, collection, function (result) {
         //res.writeHead(200, {'Content-Type': 'image/jpeg'});

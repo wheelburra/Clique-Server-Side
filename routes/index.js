@@ -19,8 +19,9 @@ router.get('/userlist', function (req, res) {
 
 // Same as above test with just printing JSon data
 router.get('/collection', function (req, res) {
+    var coll = req.param('collection');
     var db = req.db;
-    var collection = db.get('userCollection');
+    var collection = db.get(coll);
     collection.find({}, {}, function (e, docs) {
         res.json(docs); //send JSON data!
     });
