@@ -23,14 +23,14 @@ module.exports =  {
                 }
                 // The password is incorrect
                 else {
-                    console.log(dbPass + " does not match " + urlPass);
-                    callback("error")
+                    console.log("Password does not match");
+                    callback("Password does not match");
                 }
             }
             // No username match found in database
             else {
-                console.log(password + " does not exist");
-                callback("error");
+                console.log(username + " does not exist");
+                callback("That username does not exist");
             }
         });
     }

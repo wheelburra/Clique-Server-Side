@@ -3,7 +3,7 @@ var fs = require('fs');
 module.exports = {
     // not even a little bit ready... lees stuff in app.js looks better
     uploadPic: function (username, album, readPic, origName, collection, callback) {
-        console.log("incomming file path: " + readPic);
+        console.log("incomming file path: " + readPic); 
         console.log("incomming file name: " + origName);
         fs.readFile(readPic, function (err, data) {
             if (err) {
@@ -18,7 +18,7 @@ module.exports = {
                         callback({'response': "Error"});
                     } else {
                         console.log("wrote file: " + origName);
-                        callback({'response': "Saved"});
+                        callback({'response': "Image Saved"});
                     }
                 });
             }
