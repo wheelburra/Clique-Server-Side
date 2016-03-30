@@ -118,12 +118,20 @@ router.get('/getCollection', function (req, res) {
 // Should this be a post??
 router.get('/createAlbum', function (req, res) {
 
-    // Pulls parameters from URL
-    var album = req.param('album');
-    var username = req.param('username');
+// TEST parameters 
 
+    // Pulls parameters from URL
+    var album = req.param('name');
+    var username = req.param('username');
+    var collection = req.param('collection');
+    // Set the internal DB variable
+    var db = req.db;
+    var master = username + "Albums";
+    // Set the user profile collection to a variable
+    var albumCollection = db.get(collection);
+    var masterAlbumCollection = db.get(master);
     // Return callback from createAlbum function
-    createAlbum.createAlbum(username, album, function (result) {
+    createAlbum.createAlbum(username, album, collection, albumCollection, masterAlbumCollection, function (result) {
         res.send(result);
     });
 });
