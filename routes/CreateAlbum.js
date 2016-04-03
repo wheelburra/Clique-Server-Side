@@ -13,7 +13,8 @@ module.exports = {
                     return console.error(err);
                 }
                 console.log("Directory created successfully!");
-                // insert adds a new album collection 
+                // insert adds a new album collection
+                // Pretty sure this insert can be relocated to the picFromApp function
                 albumCollection.insert({
                     "create": "inserting this creates the new collection"
                 }, function (err) {

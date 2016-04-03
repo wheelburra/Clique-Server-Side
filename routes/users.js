@@ -87,9 +87,9 @@ router.post('/picFromApp', function (req, res) {
     // Set the internal DB variable
     var db = req.db;
     // Set the user profile collection to a variable
-    var collection = db.get(username + album);
+    var albumCollection = db.get(album);
     
-    picFromApp.uploadPic(username, album, readPic, origName, collection, function (result) { 
+    picFromApp.uploadPic(username, album, readPic, origName, albumCollection, function (result) { 
         res.send(result);
     });
 });
