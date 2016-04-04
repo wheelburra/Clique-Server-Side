@@ -129,7 +129,7 @@ router.get('/createAlbum', function (req, res) {
     var db = req.db;
     var master = username + "Albums";
     // Set the user profile collection to a variable
-    var albumCollection = db.get(collection);
+    var albumCollection = db.get(username + collection);
     var masterAlbumCollection = db.get(master);
     // Return callback from createAlbum function
     createAlbum.createAlbum(username, album, collection, albumCollection, masterAlbumCollection, function (result) {

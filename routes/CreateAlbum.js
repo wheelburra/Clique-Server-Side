@@ -26,7 +26,7 @@ module.exports = {
                         // insert adds a new album document to the users master album collection 
                         masterAlbumCollection.insert({
                             "name": album,
-                            "collection": collection
+                            "collection": username + collection
                         }, function (err) {
                             if (err) {
                                 // Writing to the database error
@@ -34,7 +34,7 @@ module.exports = {
                                 callback({'message': err});
                             } else {
                                 console.log('Album and collection created');
-                                callback('Album and collection created');
+                                callback('success');
                             }
                         });
                     }
@@ -43,7 +43,7 @@ module.exports = {
         } else {
             // album already exists
             console.log("Directory already exists!");
-            callback('Album already exists');
+            callback('Entry is blank or Album name already exists.');
         }
     }
 };
