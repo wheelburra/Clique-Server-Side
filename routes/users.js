@@ -5,8 +5,10 @@ var register = require('./register'); //allows register.js exports to be used
 var picToApp = require('./picToApp'); //allows picToApp.js exports to be used
 var createAlbum = require('./createAlbum'); //allows createAlbum.js exports to be used
 var picFromApp = require('./picFromApp'); //allows picToApp.js exports to be used
-//uncomment above when code is ready to be tested
-
+var getFriends = require('./getFriends'); //allows getFriends.js exports to be used
+var addFriend = require('./addFriend'); //allows addFriend.js exports to be used
+var findUser = require('./findUser'); //allows findUser.js exports to be used
+//
 //Route calls login function for login.js file
 router.get('/login', function (req, res) {
 
@@ -52,7 +54,7 @@ router.get('/picToApp', function (req, res) {
 
     var objID = req.param('objID'); //this is hardcoded on app side for now
     var coll = req.param('collection');
-    
+
     // Set the internal DB variable
     var db = req.db;
 
@@ -71,16 +73,17 @@ router.get('/picToApp', function (req, res) {
  */
 router.post('/picFromApp', function (req, res) {
     //hard codded for testing
-    var album = 'album1';
-    var username = 'skyweezy';
-   
+//    var album = 'album1';
+//    var username = 'skyweezy';
+
     // Get our JSON values.
     //var album = req.body.album;
     //var username = req.body.username;
     //   uncertain with method to use to obtain the album and username values
-    // pull parameters from URL
-    //var album = req.param('album');
-    //var username = req.param('username');
+
+// pull parameters from URL
+    var album = req.param('album');
+    var username = req.param('username');
     var readPic = req.files.image.path;
     var origName = req.files.image.originalFilename;
 
@@ -88,8 +91,8 @@ router.post('/picFromApp', function (req, res) {
     var db = req.db;
     // Set the user profile collection to a variable
     var albumCollection = db.get(album);
-    
-    picFromApp.uploadPic(username, album, readPic, origName, albumCollection, function (result) { 
+
+    picFromApp.uploadPic(username, album, readPic, origName, albumCollection, function (result) {
         res.send(result);
     });
 });
@@ -118,8 +121,6 @@ router.get('/getCollection', function (req, res) {
 // Should this be a post??
 router.get('/createAlbum', function (req, res) {
 
-// TEST parameters 
-
     // Pulls parameters from URL
     var album = req.param('name');
     var username = req.param('username');
@@ -132,6 +133,60 @@ router.get('/createAlbum', function (req, res) {
     var masterAlbumCollection = db.get(master);
     // Return callback from createAlbum function
     createAlbum.createAlbum(username, album, collection, albumCollection, masterAlbumCollection, function (result) {
+        res.send(result);
+    });
+});
+
+// Requests the Friends List
+router.get('/getFriends', function (req, res) {
+
+    // Pulls parameters from URL
+    var username = req.param('username'); 
+    var friends = username + "friendsList";
+
+    // Set the internal DB variable
+    var db = req.db;
+
+    // Set the user Friends List collection to a variable
+    var collection = db.get(friends);
+
+    getFriends.getFriends(collection, function (result) {
+        res.send(result);
+    });
+});
+
+// Adds to the Friend List
+router.get('/addFriend', function (req, res) {
+
+    // Pulls parameters from URL
+    var username = req.param('username'); 
+    var friendName = req.param('friendName');
+    var friends = username + "friendsList";
+
+    // Set the internal DB variable
+    var db = req.db;
+
+    // Set the user Friends List collection to a variable
+    var collection = db.get(friends);
+
+    addFriend.addFriend(friendName, collection, function (result) {
+        res.send(result);
+    });
+});
+
+// Finds a user to the Friend List
+router.get('/findUser', function (req, res) {
+     
+    // Pulls parameters from URL
+    var email = req.param('email'); 
+
+    // Set the internal DB variable
+    var db = req.db;
+
+    // Set the userCollection to a variable
+    var collection = db.get('userCollection');
+    
+    findUser.findUser(email, collection, function (result) {
         res.send(result);
     });
 });
