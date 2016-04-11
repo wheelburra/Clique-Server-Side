@@ -89,8 +89,8 @@ router.post('/picFromApp', function (req, res) {
 
     // Set the internal DB variable
     var db = req.db;
-    // Set the user profile collection to a variable
-    var albumCollection = db.get(album);
+    // Set the user album collection to a variable
+    var albumCollection = db.get(username + album);
 
     picFromApp.uploadPic(username, album, readPic, origName, albumCollection, function (result) {
         res.send(result);
@@ -128,11 +128,10 @@ router.get('/createAlbum', function (req, res) {
     // Set the internal DB variable
     var db = req.db;
     var master = username + "Albums";
-    // Set the user profile collection to a variable
-    var albumCollection = db.get(username + collection);
+    // Set the user master album collection to a variable
     var masterAlbumCollection = db.get(master);
     // Return callback from createAlbum function
-    createAlbum.createAlbum(username, album, collection, albumCollection, masterAlbumCollection, function (result) {
+    createAlbum.createAlbum(username, album, collection, masterAlbumCollection, function (result) {
         res.send(result);
     });
 });
