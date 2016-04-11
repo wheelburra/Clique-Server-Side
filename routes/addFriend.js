@@ -4,7 +4,7 @@ module.exports = {
 
         // Writing to the DB, adding a new user document to usercollection
         collection.insert({
-            "name": friendName
+            "username": friendName
         }, function (err) {
             if (err) {
                 // Writing to the database error
@@ -12,7 +12,7 @@ module.exports = {
                 callback({'message': err});
             } else {
                 console.log("Added Friend");
-                callback("Added Friend");
+                callback(friendName + " was added to your friend list.");
             }
         });
     }
